@@ -1,0 +1,82 @@
+<aura:component controller="SearchController" >
+    <aura:attribute name="searchString" type="String" default="" />
+    <aura:attribute name="accountList" type="Account[]" default="[]" />
+    <aura:attribute name="contactList" type="Contact[]" default="[]" />
+    <aura:attribute name="fieldMap" type="List" default="[]" />
+    <div aria-labelledby="newSearchForm">
+        <fieldset class="slds-box slds-theme--default slds-container--small">
+        <form class="slds-form--stacked">          
+            <lightning:input aura:id="searchString" 
+                             label="Search Account/Contact"
+                             value="{!v.searchString}"
+                             required="true"
+                             onchange = "{!c.getSearchLength}"
+                             updateOn="keyup"
+                             placeholder = "Please enter atlease 3 characters"
+                             /> 
+            <lightning:button aura:id="searchButton"
+                              label="Search" 
+                              class="slds-m-top--medium"
+                              variant="brand"
+                              onclick="{!c.search}"
+                              disabled="true"
+                              />
+        </form>  
+      </fieldset>
+    </div>
+    <br/>
+    <div aura:id="accountRecords">
+        Account Records <br/>
+     <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+          <thead>
+            <tr class="slds-text-heading_label">
+              <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+              <th scope="col"><div class="slds-truncate" title="Phone">Phone</div></th>
+              <th scope="col"><div class="slds-truncate" title="Phone">Website</div></th>
+            </tr>
+          </thead>
+          <tbody>
+     
+    <aura:iteration items="{!v.accountList}" var="acc">
+          <tr>
+        <td><div class="slds-truncate" title="{!acc.Name}">{!acc.Name}</div></td>     
+        <td><div class="slds-truncate" title="{!acc.Phone}">{!acc.Phone}</div></td> 
+        <td><div class="slds-truncate" title="{!acc.Phone}">{!acc.Website}</div></td>     
+         </tr>
+    </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <div aura:id="contactRecords">
+        Contact Records <br/>
+        <table class="slds-table slds-table_bordered slds-table_striped slds-table_cell-buffer slds-table_fixed-layout">
+          <thead>
+            <tr class="slds-text-heading_label">
+              <th scope="col"><div class="slds-truncate" title="Name">Name</div></th>
+              <th scope="col"><div class="slds-truncate" title="Phone">Phone</div></th>
+              <th scope="col"><div class="slds-truncate" title="Phone">Email</div></th>
+            </tr>
+          </thead>
+          <tbody>
+     <aura:iteration items="{!v.contactList}" var="con" >
+         <tr>
+        <td><div class="slds-truncate" title="{!con.Name}">{!con.Name}</div></td>     
+        <td><div class="slds-truncate" title="{!con.Phone}">{!con.Phone}</div></td> 
+        <td><div class="slds-truncate" title="{!con.Phone}">{!con.Email}</div></td>     
+         </tr>
+         </aura:iteration>
+            </tbody>
+        </table>
+    </div>
+    
+    testing
+    
+     <aura:iteration items="{!v.contactList}" var="con" >
+         <tr>
+             <aura:iteration items="{!v.fieldMap}" var="item" indexVar="key">
+                 <td><c:dynamicInputField record="{!con}" fieldDetails="{!item}" /></td>    
+             </aura:iteration>
+         </tr>
+         </aura:iteration>
+</aura:component>
